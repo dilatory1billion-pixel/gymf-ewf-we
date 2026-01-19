@@ -4,7 +4,6 @@ import { ArrowRight } from 'lucide-react';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
 
   // Scroll to top and trigger animation when component mounts
   useEffect(() => {
@@ -19,10 +18,10 @@ const About = () => {
   return (
     <div className="about-page">
       <div className="about-container">
-        {/* Hero Section - Activity 2: Increased heading size + accent color subheading */}
+        {/* Hero Section */}
         <div className="about-hero-section">
-          <h1 className="about-main-title about-title-large">ABOUT RAZE</h1>
-          <p className="about-subtitle about-subtitle-accent">Built by Discipline. Made to Move.</p>
+          <h1 className="about-main-title">ABOUT RAZE</h1>
+          <p className="about-subtitle">Built by Discipline. Made to Move.</p>
         </div>
 
         {/* Main Content */}
@@ -45,48 +44,29 @@ const About = () => {
           </section>
 
           {/* RAZE IN MOTION - Image Gallery Section */}
-          {/* Activity 3: Resized hero image + frame/border + filter */}
-          {/* Activity 4: Entrance animation (fade-in + upward move) */}
           <section className="about-gallery-section">
             <h2 className="about-gallery-title">RAZE IN MOTION</h2>
-            <div className="about-gallery-grid about-gallery-three">
-              {/* Image 1 - HERO IMAGE with all Activity 3 edits + Activity 4 animation */}
-              <div 
-                className={`about-gallery-item about-gallery-hero ${isVisible ? 'animate-hero-entrance' : ''}`}
-                data-testid="about-hero-image-container"
-              >
-                <div className="about-image-frame">
-                  <img 
-                    src="/images/athletes/mag_athlete.jpg" 
-                    alt="Male gymnast training - athletic performance"
-                    className="about-gallery-image about-image-filtered about-image-hero-size"
-                    data-testid="about-hero-image"
-                    onLoad={() => setImageLoaded(true)}
-                  />
-                </div>
+            <div className="about-gallery-grid about-gallery-two">
+              {/* Image 1 - MAG Athlete with Animation */}
+              <div className={`about-gallery-item about-gallery-main ${isVisible ? 'animate-fade-in-up' : ''}`}>
+                <img 
+                  src="/images/athletes/mag_athlete.jpg" 
+                  alt="Male gymnast training - athletic performance"
+                  className="about-gallery-image"
+                  data-testid="about-image-main"
+                />
                 <span className="about-image-label">Men's Athletic Gymnastics</span>
               </div>
               
               {/* Image 2 - WAG Athlete */}
-              <div className={`about-gallery-item ${isVisible ? 'animate-fade-in-up delay-200' : ''}`}>
+              <div className="about-gallery-item">
                 <img 
                   src="/images/athletes/wag_athlete.jpg" 
                   alt="Female gymnast training - athletic performance"
                   className="about-gallery-image"
-                  data-testid="about-image-secondary"
+                  data-testid="about-image-lifestyle"
                 />
                 <span className="about-image-label">Women's Athletic Gymnastics</span>
-              </div>
-
-              {/* Image 3 - NEW Supporting Image (Activity 2) */}
-              <div className={`about-gallery-item about-gallery-new ${isVisible ? 'animate-fade-in-up delay-400' : ''}`}>
-                <img 
-                  src="/images/products/front_shirt_black_cyan.png" 
-                  alt="RAZE Performance T-Shirt - Black Cyan"
-                  className="about-gallery-image about-product-showcase"
-                  data-testid="about-image-new"
-                />
-                <span className="about-image-label">Performance Collection</span>
               </div>
             </div>
           </section>

@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail } from 'lucide-react';
 import { socialLinks } from '../data/mock';
-import { PaymentMethods } from './TrustBadges';
 
 // Custom social icons
 const InstagramIcon = ({ size = 18 }) => (
@@ -62,9 +61,9 @@ const Footer = () => {
         <div className="footer-section">
           <h4 className="footer-heading">Shop</h4>
           <ul className="footer-list">
-            <li><Link to="/shop">All Products</Link></li>
-            <li><Link to="/1111-sale">11.11 Sale</Link></li>
+            <li><Link to="/products">All Products</Link></li>
             <li><Link to="/size-guide">Size Guide</Link></li>
+            <li><Link to="/returns">Shipping & Returns</Link></li>
           </ul>
         </div>
 
@@ -73,33 +72,19 @@ const Footer = () => {
           <h4 className="footer-heading">Company</h4>
           <ul className="footer-list">
             <li><Link to="/about">About</Link></li>
-            <li><Link to="/from-our-customers">Reviews</Link></li>
             <li><Link to="/faq">FAQ</Link></li>
           </ul>
         </div>
 
-        {/* Help / Info Column */}
+        {/* Support Column */}
         <div className="footer-section">
-          <h4 className="footer-heading">Help</h4>
+          <h4 className="footer-heading">Support</h4>
           <ul className="footer-list">
-            <li><Link to="/shipping-returns">Shipping & Returns</Link></li>
             <li><Link to="/track">Track Order</Link></li>
-            <li><Link to="/contact">Contact Us</Link></li>
-          </ul>
-        </div>
-
-        {/* Legal Column */}
-        <div className="footer-section">
-          <h4 className="footer-heading">Legal</h4>
-          <ul className="footer-list">
-            <li><Link to="/privacy">Privacy Policy</Link></li>
-            <li><Link to="/terms">Terms of Service</Link></li>
+            <li><a href="mailto:support@razetraining.com">Contact</a></li>
           </ul>
         </div>
       </div>
-
-      {/* Payment Methods - Inside Footer Only */}
-      <PaymentMethods />
 
       <div className="footer-bottom">
         <p className="footer-copyright">
