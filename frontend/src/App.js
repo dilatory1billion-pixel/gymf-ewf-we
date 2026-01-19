@@ -9,6 +9,7 @@ import Hero from "./components/Hero";
 import TrustBar from "./components/TrustBar";
 import WaitlistBanner from "./components/WaitlistBanner";
 import ProductCategories from "./components/ProductCategories";
+import AboutSection from "./components/AboutSection";
 import Features from "./components/Features";
 import Reviews from "./components/Reviews";
 import Newsletter from "./components/Newsletter";
@@ -16,8 +17,8 @@ import Footer from "./components/Footer";
 import EmailPopup from "./components/EmailPopup";
 import GiveawayPopup from "./components/GiveawayPopup";
 import AnnouncementBar from "./components/AnnouncementBar";
+import SalePromoSection from "./components/SalePromoSection";
 import ScrollToTop from "./components/ScrollToTop";
-import { PaymentMethods } from "./components/TrustBadges";
 import { Toaster } from "./components/ui/sonner";
 import AdminRoute from "./components/AdminRoute";
 import LiveVisitorCounter from "./components/LiveVisitorCounter";
@@ -48,6 +49,15 @@ const OrderTracking = lazy(() => import("./pages/OrderTracking"));
 const Wishlist = lazy(() => import("./pages/Wishlist"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe"));
 const AnalyticsDashboard = lazy(() => import("./components/AnalyticsDashboard"));
+const FromOurCustomers = lazy(() => import("./pages/FromOurCustomers"));
+const SalePage = lazy(() => import("./pages/SalePage"));
+const Shop = lazy(() => import("./pages/Shop"));
+const AdminProducts = lazy(() => import("./pages/AdminProducts"));
+const AdminCategories = lazy(() => import("./pages/AdminCategories"));
+const OrderConfirmed = lazy(() => import("./pages/OrderConfirmed"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Terms = lazy(() => import("./pages/Terms"));
+const Contact = lazy(() => import("./pages/Contact"));
 
 // Loading fallback
 const PageLoader = () => (
@@ -75,13 +85,14 @@ const Home = () => {
       <Header />
       <main className="landing-content">
         <Hero onEarlyAccessClick={handleEarlyAccessClick} />
+        <SalePromoSection />
         <WaitlistBanner onClick={handleEarlyAccessClick} />
         <ProductCategories />
         <TrustBar />
-        <AnnouncementBar />
         <Features />
+        <AboutSection />
+        <AnnouncementBar />
         <Reviews />
-        <PaymentMethods />
         <Newsletter onJoinClick={handleEarlyAccessClick} />
       </main>
       <Footer />
@@ -224,6 +235,11 @@ const AppRouter = () => {
         <Route path="/size-guide" element={<><Header /><SizeGuide /><Footer /></>} />
         <Route path="/faq" element={<><Header /><FAQ /><Footer /></>} />
         <Route path="/about" element={<><Header /><About /><Footer /></>} />
+        <Route path="/from-our-customers" element={<><Header /><FromOurCustomers /><Footer /></>} />
+        <Route path="/1111-sale" element={<><Header /><SalePage /><Footer /></>} />
+        <Route path="/shop" element={<><Header /><Shop /><Footer /></>} />
+        <Route path="/admin/products" element={<><Header /><AdminProducts /><Footer /></>} />
+        <Route path="/admin/categories" element={<><Header /><AdminCategories /><Footer /></>} />
         <Route path="/returns" element={<><Header /><Returns /><Footer /></>} />
         <Route path="/dashboard" element={<><Header /><Dashboard /><Footer /></>} />
         <Route path="/account" element={<><Header /><Dashboard /><Footer /></>} />
@@ -234,6 +250,12 @@ const AppRouter = () => {
         <Route path="/admin" element={<AdminRoute><><Header /><AdminDashboard /><Footer /></></AdminRoute>} />
         <Route path="/admin/orders" element={<AdminRoute><><Header /><AdminDashboard /><Footer /></></AdminRoute>} />
         <Route path="/admin/analytics" element={<AdminRoute><><Header /><AnalyticsDashboard /><Footer /></></AdminRoute>} />
+        <Route path="/order-confirmed" element={<><Header /><OrderConfirmed /><Footer /></>} />
+        <Route path="/privacy" element={<><Header /><Privacy /><Footer /></>} />
+        <Route path="/terms" element={<><Header /><Terms /><Footer /></>} />
+        <Route path="/contact" element={<><Header /><Contact /><Footer /></>} />
+        <Route path="/shipping-returns" element={<><Header /><Returns /><Footer /></>} />
+        <Route path="/product/:productId" element={<><Header /><ProductDetail /><Footer /></>} />
       </Routes>
     </Suspense>
     </>

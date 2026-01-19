@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, ShoppingCart, User, Heart } from 'lucide-react';
+import { Menu, X, ShoppingCart, User, Heart, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -11,14 +11,27 @@ const Header = () => {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
+  const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false);
   const { getCartCount } = useCart();
   const { user, isAuthenticated, logout } = useAuth();
   const { wishlistCount } = useWishlist();
   const navigate = useNavigate();
   const cartCount = getCartCount();
+  const aboutDropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (aboutDropdownRef.current && !aboutDropdownRef.current.contains(event.target)) {
+        setIsAboutDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const scrollToSection = (sectionId) => {
-    // Check if we're on home page
     if (window.location.pathname !== '/') {
       navigate('/', { state: { scrollTo: sectionId } });
     } else {
@@ -47,15 +60,57 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="desktop-nav">
-            <Link to="/products" className="nav-link">
-              {t('nav.products')}
+            <Link to="/shop" className="nav-link">
+              Shop
             </Link>
-            <button onClick={() => scrollToSection('features')} className="nav-link">
-              {t('nav.whyRaze')}
-            </button>
+            
+            {/* About Us Dropdown - Desktop (hover) */}
+            <div 
+              className="nav-dropdown-container"
+              ref={aboutDropdownRef}
+              onMouseEnter={() => setIsAboutDropdownOpen(true)}
+              onMouseLeave={() => setIsAboutDropdownOpen(false)}
+            >
+              <button 
+                className="nav-link nav-dropdown-trigger"
+                data-testid="about-us-dropdown"
+              >
+                About Us
+                <ChevronDown 
+                  size={16} 
+                  className={`dropdown-chevron ${isAboutDropdownOpen ? 'rotated' : ''}`} 
+                />
+              </button>
+              
+              {isAboutDropdownOpen && (
+                <div className="nav-dropdown-menu" data-testid="about-dropdown-menu">
+                  <Link 
+                    to="/about" 
+                    className="nav-dropdown-item"
+                    onClick={() => setIsAboutDropdownOpen(false)}
+                  >
+                    About RAZE
+                  </Link>
+                  <Link 
+                    to="/from-our-customers" 
+                    className="nav-dropdown-item"
+                    onClick={() => setIsAboutDropdownOpen(false)}
+                    data-testid="from-our-customers-link"
+                  >
+                    From our customers
+                  </Link>
+                </div>
+              )}
+            </div>
+
             <button onClick={() => scrollToSection('newsletter')} className="nav-link">
               {t('nav.earlyAccess')}
             </button>
+
+            {/* 11.11 Sale Link */}
+            <Link to="/1111-sale" className="nav-link nav-sale-link">
+              11.11 Sale
+            </Link>
           </nav>
 
           {/* Cart and User Actions */}
@@ -138,15 +193,52 @@ const Header = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <nav className="mobile-nav">
-            <Link to="/products" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              {t('nav.products')}
+            <Link to="/shop" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+              Shop
             </Link>
-            <button onClick={() => scrollToSection('features')} className="nav-link">
-              {t('nav.whyRaze')}
-            </button>
+            
+            {/* Mobile About Us Dropdown */}
+            <div className="mobile-dropdown">
+              <button 
+                className="nav-link mobile-dropdown-trigger"
+                onClick={() => setIsMobileAboutOpen(!isMobileAboutOpen)}
+              >
+                About Us
+                <ChevronDown 
+                  size={16} 
+                  className={`dropdown-chevron ${isMobileAboutOpen ? 'rotated' : ''}`} 
+                />
+              </button>
+              
+              {isMobileAboutOpen && (
+                <div className="mobile-dropdown-menu">
+                  <Link 
+                    to="/about" 
+                    className="mobile-dropdown-item"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    About RAZE
+                  </Link>
+                  <Link 
+                    to="/from-our-customers" 
+                    className="mobile-dropdown-item"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    From our customers
+                  </Link>
+                </div>
+              )}
+            </div>
+
             <button onClick={() => scrollToSection('newsletter')} className="nav-link">
               {t('nav.earlyAccess')}
             </button>
+
+            {/* 11.11 Sale Link - Mobile */}
+            <Link to="/1111-sale" className="nav-link nav-sale-link" onClick={() => setIsMenuOpen(false)}>
+              11.11 Sale
+            </Link>
+
             {isAuthenticated ? (
               <>
                 <Link to="/account" className="nav-link" onClick={() => setIsMenuOpen(false)}>
